@@ -6,6 +6,11 @@
 class DriveForward : public CommandBase {
 private:
 	double distance;
+	double kP;
+	double kI;
+	double kD;
+	double error;
+	double power;
 public:
 	DriveForward(double distance_);
 	void Initialize();

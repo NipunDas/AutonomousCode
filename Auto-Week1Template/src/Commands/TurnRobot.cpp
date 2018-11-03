@@ -8,7 +8,7 @@
 #include "TurnRobot.h"
 
 //amount refers to degrees of turn, left is negative, right is positive
-TurnRobot::TurnRobot(double amount_) : amount(amount_){
+TurnRobot::TurnRobot(double amount_) : amount(amount_), kP (1/amount_), kI(0), kD(0), error(0), power (0){
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(drive);
@@ -21,11 +21,13 @@ void TurnRobot::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void TurnRobot::Execute() {
+	error = amount - drive->getAngle();
+	power = kP*error;
 	if (amount < 180 && amount > -180) {
 	if (amount > 0) {
-		drive->tankDrive(0.5, -0.5);
+		drive->tankDrive(power + 0.1, -power - 0.1);
 	} else if (amount < 0) {
-		drive->tankDrive(-0.5, 0.5);
+		drive->tankDrive(-power - 0.1, power + 0.1);
 	} else {
 		std::cout << "Error: Turn Amount is set to 0" << std::endl;
 	}

@@ -6,6 +6,11 @@
 class TurnRobot : public CommandBase {
 private:
 	double amount;
+	double kP;
+	double kI;
+	double kD;
+	double error;
+	double power;
 public:
 	TurnRobot(double amount_);
 	void Initialize() override;
