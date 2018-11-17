@@ -11,6 +11,7 @@ private:
 	double kD;
 	double error;
 	double power;
+	double basePower;
 public:
 	TurnRobot(double amount_);
 	void Initialize() override;

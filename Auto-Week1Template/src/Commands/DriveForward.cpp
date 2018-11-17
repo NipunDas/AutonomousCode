@@ -1,6 +1,6 @@
 #include "DriveForward.h"
 
-DriveForward::DriveForward(double distance_) : distance(distance_), kP(1/distance_), kD(0), kI(0), error(0), power(0){
+DriveForward::DriveForward(double distance_) : distance(distance_), kP(1/distance_), kD(0), kI(0), error(0), power(0), basePower(0.1){
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(Robot::chassis.get());
 	Requires(drive);
@@ -15,7 +15,7 @@ void DriveForward::Initialize() {
 void DriveForward::Execute() {
 	error = distance - (drive->leftDistance() + drive->rightDistance())/2;
 	power = kP*error;
-	drive->tankDrive(power + 0.1, power + 0.1);
+	drive->tankDrive(power + basePower, power + basePower);
 }
 
 // Make this return true when this Command no longer needs to run execute()
